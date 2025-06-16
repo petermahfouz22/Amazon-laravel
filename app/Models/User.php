@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $primaryKey = 'userId';
+
     protected $fillable = [
         'user_name',
         'email',
@@ -45,6 +47,26 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'string',
         ];
+    }
+        public function orders()
+    {
+        return $this->hasMany(Order::class, 'userId', 'userId');
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class, 'userId', 'userId');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'userId', 'userId');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'userId', 'userId');
     }
 }
